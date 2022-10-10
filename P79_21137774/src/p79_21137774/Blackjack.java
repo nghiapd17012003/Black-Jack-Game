@@ -85,7 +85,7 @@ public class Blackjack {
         }
     }
     
-    //Check if the player exist
+    //Check if the player exist.
     public Player checkPlayer(String name)
     {
         Player p;
