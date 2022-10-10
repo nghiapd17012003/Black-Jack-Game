@@ -1,6 +1,7 @@
 testWith0Balance 9
 jio 100
 yuta 0
+nghiafdf 200
 kngakjf 112
 Vi 100
 ui 1
