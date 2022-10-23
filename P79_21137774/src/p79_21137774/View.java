@@ -31,18 +31,15 @@ public class View extends JFrame implements Observer{
     public JTextField usernameInput = new JTextField();
     private JLabel password = new JLabel("Password");
     public JTextField passwordInput = new JTextField();
-           
-    
+
     private JLabel message = new JLabel("Welcome", JLabel.CENTER);
     
     private JLabel bet = new JLabel("Bet Amount: ");
     public JTextField betInput = new JTextField();  
     
-    
     private JLabel playerHand = new JLabel("Your hand:", JLabel.LEFT);
     private JLabel opponentHand = new JLabel("Opponent hand:", JLabel.LEFT);
     
-
     private JLabel currentBalance = new JLabel("Current Balance: $");
     
     private JButton logIn = new JButton("Log in");
@@ -53,7 +50,6 @@ public class View extends JFrame implements Observer{
     private JButton playAgain = new JButton("Play Again"); 
     private JButton quit = new JButton("Quit");
     private JButton restart = new JButton("Restart");
-
     
     public View ()
     {
@@ -119,11 +115,16 @@ public class View extends JFrame implements Observer{
     
     public void addActionListener(ActionListener listener)
     {
-        
+        this.signUp.addActionListener(listener);
+        this.logIn.addActionListener(listener);
+        this.start.addActionListener(listener);
+        this.draw.addActionListener(listener);
+        this.stand.addActionListener(listener);
+        this.playAgain.addActionListener(listener);
+        this.quit.addActionListener(listener);
+        this.restart.addActionListener(listener);
     }
-    
-    
-    
+      
     @Override
     public void update(Observable o, Object arg) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
