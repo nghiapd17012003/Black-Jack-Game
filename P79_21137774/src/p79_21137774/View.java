@@ -51,6 +51,9 @@ public class View extends JFrame implements Observer{
     private JButton quit = new JButton("Quit");
     private JButton restart = new JButton("Restart");
     
+    
+    public boolean started = false;
+    
     public View ()
     {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -127,6 +130,27 @@ public class View extends JFrame implements Observer{
       
     @Override
     public void update(Observable o, Object arg) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }   
+        PlayerData data = (PlayerData) arg;
+        if(!data.loginFlag)
+        {
+            this.usernameInput.setText("");
+            this.usernameInput.setText("");
+            if(data.usernameExistFlag == true)
+            {
+                this.message.setText("Wrong password! Please try again");
+            }
+            
+            else 
+            {
+                this.message.setText("This account doesn't exit! If you want to use this username, please use the Sign Up button.");
+            }
+        }
+        
+        else if (this.started == false)
+        {
+            this.preGamePhase(data.balance);
+        }
+        
+    }  
+   
 }

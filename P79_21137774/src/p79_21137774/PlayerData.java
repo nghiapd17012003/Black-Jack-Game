@@ -10,6 +10,7 @@ package p79_21137774;
  * @author nghia
  */
 public class PlayerData {
+    boolean usernameExistFlag = false;
     boolean loginFlag = false;
     boolean quitFlag = false;
     boolean restartFlag = false;

@@ -93,7 +93,7 @@ public class DBManager {
         return flag;
     }
     
-    public PlayerData checkUsername(String username, String password) 
+    public PlayerData logIn(String username, String password) 
     {
         PlayerData data = new PlayerData();
         
@@ -102,6 +102,7 @@ public class DBManager {
             ResultSet rs = statement.executeQuery("SELECT username, password, balance FROM PlayerInformation"+ "WHERE username = '"+ username +"'");
             if(rs.next())// if the player is exist
             {  
+                data.usernameExistFlag = true;
                 String password_in_database = rs.getString(password);
                 System.out.println("Found user " + "username: " + rs.getString(username) + "password: " + password_in_database);
                 
@@ -109,12 +110,19 @@ public class DBManager {
                 {
                     data.balance = rs.getInt("balance");
                     data.loginFlag = true;
+                    System.out.println("Log in success!");
+                }
+                
+                else 
+                {
+                    data.loginFlag = false;
+                    System.out.println("Log in fail: Password is incorrect");
                 }
             }
             
             else
             {
-                System.out.println("Player doesnt exit");
+                System.out.println("Player doesnt exit! \n plz use sign up button!");
             }
         } catch (SQLException ex) {
             Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
@@ -124,6 +132,7 @@ public class DBManager {
         {
             data = null;
         }
+        
         return data;
     }
     
@@ -133,12 +142,35 @@ public class DBManager {
         
         try {
             Statement statement = conn.createStatement();
-            statement.executeUpdate("INSERT INTO PlayerInformation VALUES('" + username + "', '" + password + "', 0)");
-            System.out.println("Sign up success!");
+            ResultSet rs = statement.executeQuery("SELECT username, password, balance FROM PlayerInformation"+ "WHERE username = '"+ username +"'");
+            if(rs.next())// if the player is exist
+            {
+                System.out.println("This name has already been used!");
+            }
+            
+            else
+            {
+                System.out.println("This name is useable!");
+                statement.executeUpdate("INSERT INTO PlayerInformation VALUES('" + username + "', '" + password + "', 100)");
+                System.out.println("Sign up success!");
+                data.balance = 100;
+                data.loginFlag = true;
+            }         
         } catch (SQLException ex) {
             Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return data;
+    }
+    
+    public void quitGame(String username, int newBalance)
+    {
+        Statement statement;
+        try {
+            statement = conn.createStatement();
+            statement.executeUpdate("UPDATE PlayerInformation SET balance = " + newBalance + " WHERE username = '" + username + "'");
+        } catch (SQLException ex) {
+            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+        }       
     }
 }
