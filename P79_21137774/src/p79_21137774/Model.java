@@ -6,6 +6,7 @@
 package p79_21137774;
 
 import java.util.Observable;
+import java.util.Scanner;
 
 /**
  *
@@ -16,11 +17,18 @@ public class Model extends Observable {
     public PlayerData data;
     public String username;
     public int betAmount;
+    public PlayerHand ph;
+    public DealerHand dh;
+    public int result;
+    private Deck deck;
+    
     
     public Model()
     {
         this.db = new DBManager();
         this.db.establishConnection();
+        this.ph = new PlayerHand();
+        this.dh = new DealerHand();       
     }
     
     public void logIn(String username, String password)
@@ -45,6 +53,91 @@ public class Model extends Observable {
         this.betAmount = betAmount;        
     }
     
+    public void gameStart()
+    {
+        Scanner scanner = new Scanner(System.in);
+        for(int i = 0; i < 2; i++)
+        {
+            ph.draw(getCard());
+        }
+        
+        //Show player hand
+        ph.showHand();
+        System.out.println("Player current hand value: " + ph.handValue());
+        
+    }
+    
+    public int draw() // for the draw button
+    {
+        ph.draw(getCard());
+        ph.showHand();
+        System.out.println("Your current hand value is : " + ph.handValue());
+        
+        return ph.handValue();
+    }
+    
+    public Card getCard()
+    {
+        Card card = this.deck.newCardFromDeck();
+        this.deck.updateDeck(card);
+        
+        return card;
+    }
+    
+    public int compareHand()
+    {
+        int result = 0;
+        //1 : player win
+        //-1: dealer win
+        //0 : draw
+        if(dh.handValue() <= 21 && ph.handValue() <= 21)
+        {
+            if(dh.handValue() > ph.handValue())
+            {
+                result = -1;
+            }
+            
+            else if(dh.handValue() < ph.handValue())
+            {
+                result = 1;
+            }
+        }
+        
+        else if(dh.handValue() <= 21 && ph.handValue() > 21)
+        {
+            result = -1;
+        }
+        
+        else if(dh.handValue() > 21 && ph.handValue() <= 21)
+        {
+            result = 1;
+        }
+        
+        else
+        {
+            result = 0;
+        }
+        
+        return result;
+    }
+    
+    public void updateBalance()
+    {
+        switch (result) {
+            case 1:
+                System.out.println("Player win!");
+                this.data.balance += this.betAmount;
+                break;
+            case -1:
+                System.out.println("Player lose!");
+                this.data.balance -= this.betAmount;
+                break;
+            default:
+                System.out.println("Draw!");                
+                break;
+        }          
+    }
+    
     public void quitGame()
     {
         this.db.quitGame(this.username, this.data.balance);
@@ -52,4 +145,6 @@ public class Model extends Observable {
         this.setChanged();
         this.notifyObservers(this.data);
     }
+    
+    
 }

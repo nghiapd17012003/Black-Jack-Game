@@ -32,13 +32,13 @@ public class View extends JFrame implements Observer{
     private JLabel password = new JLabel("Password");
     public JTextField passwordInput = new JTextField();
 
-    private JLabel message = new JLabel("Welcome", JLabel.CENTER);
+    public JLabel message = new JLabel("Welcome", JLabel.CENTER);
     
     private JLabel bet = new JLabel("Bet Amount: ");
     public JTextField betInput = new JTextField();  
     
-    private JLabel playerHand = new JLabel("Your hand:", JLabel.LEFT);
-    private JLabel opponentHand = new JLabel("Opponent hand:", JLabel.LEFT);
+    private JLabel playerHand = new JLabel("Your hand value:", JLabel.LEFT);
+    private JLabel opponentHand = new JLabel("Opponent hand value:", JLabel.LEFT);
     
     private JLabel currentBalance = new JLabel("Current Balance: $");
     
@@ -103,6 +103,7 @@ public class View extends JFrame implements Observer{
         this.game.add(message);
     }
     
+    
     public void afterGamePhase(int newBalance)
     {
         currentBalance = new JLabel("Current Balance: $" + newBalance);
@@ -149,8 +150,6 @@ public class View extends JFrame implements Observer{
         else if (this.started == false)
         {
             this.preGamePhase(data.balance);
-        }
-        
-    }  
-   
+        }       
+    }    
 }
