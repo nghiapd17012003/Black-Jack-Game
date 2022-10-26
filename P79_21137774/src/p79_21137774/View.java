@@ -90,7 +90,7 @@ public class View extends JFrame implements Observer{
         this.repaint();
     }
     
-    public void game(String betAmount) //or int here
+    public void game(String betAmount) 
     {
         JLabel betDisplay = new JLabel("Bet ammount: $" + betAmount);
         this.game.add(betDisplay);
@@ -110,6 +110,7 @@ public class View extends JFrame implements Observer{
         this.afterGame.add(currentBalance);
         this.afterGame.add(playAgain);
         this.afterGame.add(quit);
+        this.afterGame.add(restart);
         this.getContentPane().removeAll();
         afterGame.setVisible(true);
         this.revalidate();
