@@ -21,8 +21,7 @@ public class Controller implements ActionListener{
     {
         this.view = view;
         this.model = model;
-        this.view.addActionListener(this);
-        
+        this.view.addActionListener(this);       
     }
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -35,14 +34,28 @@ public class Controller implements ActionListener{
                 username = this.view.usernameInput.getText();
                 password = this.view.passwordInput.getText();
                 this.model.logIn(username, password);
+                this.view.preGamePhase(this.model.data.balance);
                 break;
             case "Sign up":
                 username = this.view.usernameInput.getText();
                 password = this.view.passwordInput.getText();
                 this.model.signUp(username, password);
+                this.view.preGamePhase(this.model.data.balance);
                 break;
             case "Start!":
-                this.model.betting(Integer.parseInt(this.view.betInput.getText()));                
+                int betAmount = Integer.parseInt(this.view.betInput.getText());
+                boolean bettingFlag = this.model.betting(betAmount); 
+                if(bettingFlag = false)
+                {
+                    this.view.message.setText("Your betting should be bigger than 0 and not more than your balance!");
+                }
+                
+                else
+                {
+                    String betAmountInString = Integer.toString(betAmount);
+                    this.view.game(betAmountInString);
+                }
+                
                 break;
             case "Draw":
                 if(this.model.ph.hand.size() < 5)
@@ -56,17 +69,19 @@ public class Controller implements ActionListener{
                 }               
                 break;
             case "Stand":
+                this.model.compareHand();
+                this.model.updateBalance();
+                this.view.afterGamePhase(this.model.data.balance);
                 break;
-            case "Play Again":              
+            case "Play Again":
+                this.model.playAgain();
                 break;
             case "Quit":
                 this.model.quitGame();
                 break;
             case "Restart":
-                this.model = new Model();
-                this.view = new View();
-                break;
-                
+                this.model.restartGame();
+                break;               
             default:
                 break;
         }

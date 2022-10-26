@@ -48,9 +48,16 @@ public class Model extends Observable {
         this.notifyObservers(this.data); 
     }
     
-    public void betting(int betAmount)
+    public boolean betting(int betAmount)
     {
-        this.betAmount = betAmount;        
+        boolean bettingFlag = false;
+        if(0< betAmount && betAmount < data.balance)
+        {
+            this.betAmount = betAmount;
+            bettingFlag = true;
+        }        
+        
+        return bettingFlag;
     }
     
     public void gameStart()
@@ -63,8 +70,7 @@ public class Model extends Observable {
         
         //Show player hand
         ph.showHand();
-        System.out.println("Player current hand value: " + ph.handValue());
-        
+        System.out.println("Player current hand value: " + ph.handValue());       
     }
     
     public int draw() // for the draw button
@@ -135,7 +141,9 @@ public class Model extends Observable {
             default:
                 System.out.println("Draw!");                
                 break;
-        }          
+        }    
+        
+        this.setChanged();
     }
     
     public void quitGame()
@@ -144,6 +152,18 @@ public class Model extends Observable {
         this.data.quitFlag = true;
         this.setChanged();
         this.notifyObservers(this.data);
+    }
+    
+    public void restartGame()
+    {
+        this.data.restartFlag = true;
+        this.db.quitGame(username, this.data.balance);        
+    }
+    
+    public void playAgain()
+    {
+        this.db.quitGame(username, this.data.balance);
+        this.logIn(username, this.db.password_in_database);
     }
     
     

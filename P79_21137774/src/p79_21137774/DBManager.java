@@ -22,6 +22,7 @@ public class DBManager {
     private static final String USER_NAME = "pdc";
     private static final String PASSWORD = "pdc";
     private static final String URL = "jdbc:derby:BlackJackDB_Ebd; create = true";
+    public String password_in_database = ""; 
 
     
     Connection conn = null;
@@ -103,10 +104,10 @@ public class DBManager {
             if(rs.next())// if the player is exist
             {  
                 data.usernameExistFlag = true;
-                String password_in_database = rs.getString(password);
+                this.password_in_database = rs.getString(password);
                 System.out.println("Found user " + "username: " + rs.getString(username) + "password: " + password_in_database);
                 
-                if(password_in_database.compareTo(password) == 0) // if the password is correct also
+                if(this.password_in_database.compareTo(password) == 0) // if the password is correct also
                 {
                     data.balance = rs.getInt("balance");
                     data.loginFlag = true;
