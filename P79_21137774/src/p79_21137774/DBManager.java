@@ -26,12 +26,7 @@ public class DBManager {
 
     
     Connection conn = null;
-    
-    public DBManager()
-    {
-        establishConnection();
-    }
-    
+     
     public Connection getConnection()
     {
         return this.conn;

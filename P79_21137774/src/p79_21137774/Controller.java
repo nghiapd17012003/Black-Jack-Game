@@ -39,13 +39,19 @@ public class Controller implements ActionListener{
                 username = this.view.usernameInput.getText();
                 password = this.view.passwordInput.getText();
                 this.model.logIn(username, password);
-                this.view.preGamePhase(this.model.data.balance);
+                if(this.model.data.loginFlag)
+                {
+                    this.view.preGamePhase(this.model.data.balance);
+                }               
                 break;
             case "Sign up":
                 username = this.view.usernameInput.getText();
                 password = this.view.passwordInput.getText();
                 this.model.signUp(username, password);
-                this.view.preGamePhase(this.model.data.balance);
+                if(this.model.data.loginFlag)
+                {
+                    this.view.preGamePhase(this.model.data.balance);
+                }                 
                 break;
             case "Start!":
                 int betAmount = Integer.parseInt(this.view.betInput.getText());
