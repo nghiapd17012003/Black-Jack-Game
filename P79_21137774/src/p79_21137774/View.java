@@ -54,8 +54,7 @@ public class View extends JFrame implements Observer{
     private JButton playAgain = new JButton("Play Again"); 
     private JButton quit = new JButton("Quit");
     private JButton restart = new JButton("Restart");
-    
-    
+        
     public boolean started = false;
     
     public View ()

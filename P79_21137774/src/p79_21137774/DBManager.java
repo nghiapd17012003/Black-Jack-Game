@@ -49,6 +49,8 @@ public class DBManager {
             {
                 statement.executeUpdate("CREATE TABLE " + tableName + " (username VARCHAR(12) primary key, password VARCHAR(12), balance INT)"); //username will be the primarykey
             }
+            
+            statement.close();
         } catch (SQLException ex) {
             Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
         }

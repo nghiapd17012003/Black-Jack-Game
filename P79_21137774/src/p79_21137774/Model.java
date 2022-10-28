@@ -33,8 +33,7 @@ public class Model extends Observable {
     
     public void logIn(String username, String password)
     {
-        this.username = username;
-        
+        this.username = username;     
         this.data = this.db.logIn(username, password);     
         this.setChanged();
         this.notifyObservers(this.data); 
