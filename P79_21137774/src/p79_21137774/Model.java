@@ -65,7 +65,7 @@ public class Model extends Observable {
         Scanner scanner = new Scanner(System.in);
         for(int i = 0; i < 2; i++)
         {
-            ph.draw(getCard());
+            ph.draw(getCardFromDeck());
         }
         
         //Show player hand
@@ -73,16 +73,17 @@ public class Model extends Observable {
         System.out.println("Player current hand value: " + ph.handValue());       
     }
     
-    public int draw() // for the draw button
+    public int draw(Card c) // for the draw button
     {
-        ph.draw(getCard());
+        ph.draw(c);
         ph.showHand();
         System.out.println("Your current hand value is : " + ph.handValue());
         
         return ph.handValue();
     }
     
-    public Card getCard()
+    
+    public Card getCardFromDeck()
     {
         Card card = this.deck.newCardFromDeck();
         this.deck.updateDeck(card);
@@ -164,7 +165,5 @@ public class Model extends Observable {
     {
         this.db.quitGame(username, this.data.balance);
         this.logIn(username, this.db.password_in_database);
-    }
-    
-    
+    }       
 }

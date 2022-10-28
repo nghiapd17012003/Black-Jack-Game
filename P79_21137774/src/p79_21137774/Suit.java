@@ -11,7 +11,7 @@ import java.util.Random;
  * @author nghia
  */
 public enum Suit {
-    SPADES(1), CLUBS(2), DIAMONDS(3), HEART(4);
+    SPADES(1), CLUBS(2), DIAMONDS(3), HEARTS(4);
     private int suitRank;
     
     //constructor

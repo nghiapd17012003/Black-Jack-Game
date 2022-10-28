@@ -12,6 +12,9 @@ package p79_21137774;
 
 import java.awt.BorderLayout;
 import java.awt.Frame;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
@@ -22,15 +25,16 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class View extends JFrame implements Observer{
+    
     private JPanel user = new JPanel();
     private JPanel game = new JPanel();
     private JPanel afterGame = new JPanel();
     private JPanel preGame = new JPanel();
     
     private JLabel username = new JLabel("Username");
-    public JTextField usernameInput = new JTextField();
+    public JTextField usernameInput = new JTextField(15);
     private JLabel password = new JLabel("Password");
-    public JTextField passwordInput = new JTextField();
+    public JTextField passwordInput = new JTextField(15);
 
     public JLabel message = new JLabel("Welcome", JLabel.CENTER);
     
@@ -66,7 +70,7 @@ public class View extends JFrame implements Observer{
         this.user.add(password);
         this.user.add(passwordInput);
         this.user.add(logIn);
-        this.user.add(restart);
+        this.user.add(signUp);
         this.add(this.message,BorderLayout.SOUTH);
         this.add(user); //add panel to frame
         this.setVisible(true);       
@@ -104,6 +108,7 @@ public class View extends JFrame implements Observer{
     }
     
     
+    
     public void afterGamePhase(int newBalance)
     {
         currentBalance = new JLabel("Current Balance: $" + newBalance);
@@ -131,7 +136,8 @@ public class View extends JFrame implements Observer{
     }
       
     @Override
-    public void update(Observable o, Object arg) {
+    public void update(Observable o, Object arg) 
+    {
         PlayerData data = (PlayerData) arg;
         if(!data.loginFlag)
         {

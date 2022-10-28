@@ -38,23 +38,21 @@ public class DBManager {
     }
     
     public void establishConnection()
-    {
-        if(conn != null)
-        {
-            try {
-                conn = DriverManager.getConnection(URL, USER_NAME, PASSWORD);
-                System.out.println(URL + " Get Connect Successfully!");              
-                Statement statement = conn.createStatement();
-                String tableName = "PlayerInformation";
-                
-                if(!checkTableExisting(tableName))
-                {
-                    statement.executeUpdate("CREATE TABLE " + tableName + " (username VARCHAR(12) primary key, password VARCHAR(12), balance INT)"); //username will be the primarykey
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+    {     
+        try {
+            conn = DriverManager.getConnection(URL, USER_NAME, PASSWORD);
+            System.out.println(URL + " Get Connect Successfully!");              
+            Statement statement = conn.createStatement();
+            String tableName = "PlayerInformation";
+
+            if(!checkTableExisting(tableName))
+            {
+                statement.executeUpdate("CREATE TABLE " + tableName + " (username VARCHAR(12) primary key, password VARCHAR(12), balance INT)"); //username will be the primarykey
             }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
     
     public void closeConnection()
@@ -73,7 +71,6 @@ public class DBManager {
     private boolean checkTableExisting(String newTableName) {
         boolean flag = false;
         try {
-
             System.out.println("check existing tables.... ");
             String[] types = {"TABLE"};
             DatabaseMetaData dbmd = conn.getMetaData();
@@ -94,13 +91,13 @@ public class DBManager {
         return flag;
     }
     
-    public PlayerData logIn(String username, String password) 
+    public PlayerData logIn(String username, String password)  
     {
         PlayerData data = new PlayerData();
         
         try {
             Statement statement = conn.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT username, password, balance FROM PlayerInformation"+ "WHERE username = '"+ username +"'");
+            ResultSet rs = statement.executeQuery("SELECT username, password, balance FROM PlayerInformation " + "WHERE username = '" + username + "'");
             if(rs.next())// if the player is exist
             {  
                 data.usernameExistFlag = true;

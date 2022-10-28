@@ -5,6 +5,9 @@
  */
 package p79_21137774;
 
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -23,6 +26,8 @@ public class Controller implements ActionListener{
         this.model = model;
         this.view.addActionListener(this);       
     }
+    
+    
     @Override
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();//method will give us String repersentaion in action commnad. The value will be component specific
@@ -60,7 +65,11 @@ public class Controller implements ActionListener{
             case "Draw":
                 if(this.model.ph.hand.size() < 5)
                 {
-                    this.model.draw();
+                    Card c = model.getCardFromDeck();
+                    this.model.draw(c);
+                    CardImage cardImage = new CardImage();
+                    cardImage.c = c;
+                    this.view.add(cardImage);
                 } 
                 
                 else 
