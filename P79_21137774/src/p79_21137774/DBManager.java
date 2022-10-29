@@ -19,33 +19,29 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class DBManager {
-    private static final String USER_NAME = "pdc";
-    private static final String PASSWORD = "pdc";
-    private static final String URL = "jdbc:derby:BlackJackDB_Ebd; create = true";
+    String USER_NAME = "pdc";
+    String PASSWORD = "pdc";
+    String URL = "jdbc:derby://localhost:1527/BlackJackDB_Ebd; create = true";
     public String password_in_database = ""; 
 
     
     Connection conn = null;
-     
-    public Connection getConnection()
-    {
-        return this.conn;
-    }
     
     public void establishConnection()
     {     
-        try {
+        try {        
             conn = DriverManager.getConnection(URL, USER_NAME, PASSWORD);
             System.out.println(URL + " Get Connect Successfully!");              
             Statement statement = conn.createStatement();
             String tableName = "PlayerInformation";
 
-            if(!checkTableExisting(tableName))
+            if(checkTableExisting(tableName) == false)
             {
                 statement.executeUpdate("CREATE TABLE " + tableName + " (username VARCHAR(12) primary key, password VARCHAR(12), balance INT)"); //username will be the primarykey
             }
             
             statement.close();
+        
         } catch (SQLException ex) {
             Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -98,8 +94,8 @@ public class DBManager {
             if(rs.next())// if the player is exist
             {  
                 data.usernameExistFlag = true;
-                this.password_in_database = rs.getString(password);
-                System.out.println("Found user " + "username: " + rs.getString(username) + "password: " + password_in_database);
+                this.password_in_database = rs.getString("password");
+                System.out.println("Found user " + "username: " + rs.getString("username") + "password: " + password_in_database);
                 
                 if(this.password_in_database.compareTo(password) == 0) // if the password is correct also
                 {
@@ -117,7 +113,7 @@ public class DBManager {
             
             else
             {
-                System.out.println("Player doesnt exit! \n plz use sign up button!");
+                System.out.println("Player doesnt exit! \nplz use sign up button!");
             }
         } catch (SQLException ex) {
             Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);

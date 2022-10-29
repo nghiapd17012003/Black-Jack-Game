@@ -28,15 +28,16 @@ public class Model extends Observable {
         this.db = new DBManager();
         this.db.establishConnection();
         this.ph = new PlayerHand();
-        this.dh = new DealerHand();       
+        this.dh = new DealerHand();
     }
     
     public void logIn(String username, String password)
     {
         this.username = username;     
-        this.data = this.db.logIn(username, password);     
+        this.data = this.db.logIn(username, password);  
+        
         this.setChanged();
-        this.notifyObservers(this.data); 
+        this.notifyObservers(this.data);      
     }
     
     public void signUp(String username, String password)

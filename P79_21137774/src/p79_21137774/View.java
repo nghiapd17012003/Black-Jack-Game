@@ -32,14 +32,14 @@ public class View extends JFrame implements Observer{
     private JPanel preGame = new JPanel();
     
     private JLabel username = new JLabel("Username");
-    public JTextField usernameInput = new JTextField(15);
+    public JTextField usernameInput = new JTextField(18);
     private JLabel password = new JLabel("Password");
-    public JTextField passwordInput = new JTextField(15);
+    public JTextField passwordInput = new JTextField(18);
 
     public JLabel message = new JLabel("Welcome", JLabel.CENTER);
     
     private JLabel bet = new JLabel("Bet Amount: ");
-    public JTextField betInput = new JTextField();  
+    public JTextField betInput = new JTextField(7);  
     
     private JLabel playerHand = new JLabel("Your hand value:", JLabel.LEFT);
     private JLabel opponentHand = new JLabel("Opponent hand value:", JLabel.LEFT);
@@ -103,7 +103,7 @@ public class View extends JFrame implements Observer{
         //card pic
         this.game.add(draw);
         this.game.add(stand);
-        this.game.add(message);
+        this.game.add(message, BorderLayout.SOUTH);
     }
     
     
@@ -141,7 +141,7 @@ public class View extends JFrame implements Observer{
         if(!data.loginFlag)
         {
             this.usernameInput.setText("");
-            this.usernameInput.setText("");
+            this.passwordInput.setText("");
             if(data.usernameExistFlag == true)
             {
                 this.message.setText("Wrong password! Please try again");
@@ -156,6 +156,11 @@ public class View extends JFrame implements Observer{
         else if (this.started == false)
         {
             this.preGamePhase(data.balance);
-        }       
+        }
+        
+        else if(data.quitFlag)
+        {
+            this.afterGamePhase(data.balance);
+        }
     }    
 }

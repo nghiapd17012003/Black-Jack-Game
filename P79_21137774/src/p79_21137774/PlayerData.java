@@ -14,5 +14,5 @@ public class PlayerData {
     boolean loginFlag = false;
     boolean quitFlag = false;
     boolean restartFlag = false;
-    int balance;
+    int balance = 0;
 }

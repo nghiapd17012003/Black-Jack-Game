@@ -48,15 +48,18 @@ public class Controller implements ActionListener{
                 username = this.view.usernameInput.getText();
                 password = this.view.passwordInput.getText();
                 this.model.signUp(username, password);
+                
+                this.view.preGamePhase(this.model.data.balance);
                 if(this.model.data.loginFlag)
                 {
                     this.view.preGamePhase(this.model.data.balance);
-                }                 
+                }              
+                               
                 break;
             case "Start!":
                 int betAmount = Integer.parseInt(this.view.betInput.getText());
                 boolean bettingFlag = this.model.betting(betAmount); 
-                if(bettingFlag = false)
+                if(bettingFlag == false)
                 {
                     this.view.message.setText("Your betting should be bigger than 0 and not more than your balance!");
                 }
